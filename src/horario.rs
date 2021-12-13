@@ -91,7 +91,7 @@ impl epi::App for Horario {
         storage: Option<&dyn epi::Storage>,
     ) {
         if let Some(storage) = storage {
-            self.datos = eframe::epi::get_value(storage, "horario").unwrap_or_default();
+            self.datos = epi::get_value(storage, epi::App::name(self)).unwrap_or_default();
         }
 
         self.check = if self.datos.config[3] == "true" {
@@ -101,36 +101,36 @@ impl epi::App for Horario {
         };
     }
 
-    fn save(&mut self, storage: &mut dyn eframe::epi::Storage) {
+    fn save(&mut self, storage: &mut dyn epi::Storage) {
         if self.check {
             self.datos.config[3] = String::from("true");
         } else {
             self.datos.config[3] = String::from("false");
         };
 
-        eframe::epi::set_value(storage, "horario", &self.datos);
+        epi::set_value(storage, epi::App::name(self), &self.datos);
     }
 
     fn update(&mut self, ctx: &egui::CtxRef, frame: &mut epi::Frame<'_>) {
         //ctx.set_visuals(eframe::egui::Visuals::dark());
         frame.set_window_size(egui::Vec2 { x: 610.0, y: 375.0 });
 
-        let mut fonts = eframe::egui::FontDefinitions::default();
+        let mut fonts = egui::FontDefinitions::default();
         fonts.family_and_size.insert(
-            eframe::egui::TextStyle::Body,
-            (eframe::egui::FontFamily::Proportional, 24.0),
+            egui::TextStyle::Body,
+            (egui::FontFamily::Proportional, 24.0),
         );
         fonts.family_and_size.insert(
-            eframe::egui::TextStyle::Heading,
-            (eframe::egui::FontFamily::Proportional, 20.0),
+            egui::TextStyle::Heading,
+            (egui::FontFamily::Proportional, 20.0),
         );
         fonts.family_and_size.insert(
-            eframe::egui::TextStyle::Button,
-            (eframe::egui::FontFamily::Proportional, 18.0),
+            egui::TextStyle::Button,
+            (egui::FontFamily::Proportional, 18.0),
         );
         fonts.family_and_size.insert(
-            eframe::egui::TextStyle::Small,
-            (eframe::egui::FontFamily::Proportional, 17.0),
+            egui::TextStyle::Small,
+            (egui::FontFamily::Proportional, 17.0),
         );
         ctx.set_fonts(fonts);
 
