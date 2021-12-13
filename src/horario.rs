@@ -450,12 +450,14 @@ impl Horario {
     fn menu_configurar(&mut self, ui: &mut egui::Ui) {
         let zero = NaiveTime::parse_from_str("00:00", "%H:%M").unwrap();
 
+        ui.add_space(5.0);
         ui.colored_label(egui::Color32::DEBUG_COLOR, "Configuración");
         ui.add_space(30.0);
+
         egui::Grid::new("config")
             .num_columns(4)
             .min_col_width(103.0)
-            .spacing([15.0, 30.0])
+            .spacing([15.0, 20.0])
             .show(ui, |ui| {
                 for i in 0..4 {
                     ui.label("");
@@ -518,17 +520,17 @@ impl Horario {
 
     fn menu_horario(&mut self, ui: &mut egui::Ui) {
         let zero = NaiveTime::parse_from_str("00:00", "%H:%M").unwrap();
-        ui.spacing_mut().item_spacing.y = 0.0;
 
+        ui.add_space(5.0);
         ui.colored_label(egui::Color32::LIGHT_BLUE, get_week());
-        ui.add_space(15.0);
+        ui.add_space(21.0);
 
         let dt = Utc::now();
         let num_day_week = dt.weekday().number_from_monday(); // Mon=1, ..., Vie=5, Sat=6, Sun=7
         let ndw = num_day_week as usize;
 
-        egui::Grid::new("week")
-            .spacing(egui::Vec2::new(20.0, 0.0))
+        egui::Grid::new("fichajes")
+            .spacing(egui::Vec2::new(20.0, 15.0))
             .min_col_width(103.0)
             .show(ui, |ui| {
                 for i in 0..5 {
@@ -545,12 +547,7 @@ impl Horario {
                         );
                     }
                 }
-            });
 
-        egui::Grid::new("fichajes")
-            .spacing(egui::Vec2::new(20.0, 18.0))
-            .min_col_width(103.0)
-            .show(ui, |ui| {
                 for (i, _) in self.datos.fichajes.clone().iter().enumerate() {
                     if i % 5 == 0 {
                         ui.end_row();
