@@ -91,7 +91,7 @@ impl epi::App for Horario {
         storage: Option<&dyn epi::Storage>,
     ) {
         if let Some(storage) = storage {
-            self.datos = epi::get_value(storage, epi::App::name(self)).unwrap_or_default();
+            self.datos = epi::get_value(storage, epi::APP_KEY).unwrap_or_default();
         }
 
         self.check = if self.datos.config[3] == "true" {
@@ -108,7 +108,7 @@ impl epi::App for Horario {
             self.datos.config[3] = String::from("false");
         };
 
-        epi::set_value(storage, epi::App::name(self), &self.datos);
+        epi::set_value(storage, epi::APP_KEY, &self.datos);
     }
 
     fn update(&mut self, ctx: &egui::CtxRef, frame: &mut epi::Frame<'_>) {
