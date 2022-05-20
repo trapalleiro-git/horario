@@ -749,3 +749,4 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     run_native(APPNAME, options, Box::new(|cc| Box::new(Horario::new(cc))));
 }
+
